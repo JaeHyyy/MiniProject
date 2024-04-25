@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.config.MemberMapper">
+
+    <insert id="join" parameterType="MemberDTO">
+        insert into member
+        values( #{member_idx}, #{member_id}, #{member_pw}, #{member_name}, #{member_phone}, #{member_date}, #{member_role} )
+    </insert>
+    
+    <select id="existsId" parameterType="String" resultType="int">
+        select count(*) from member where member_id = #{id}
+    </select>
+    
+    <select id="login" parameterType="MemberDTO" resultType="MemberDTO">
+		select *
+		from member
+		where member_id = #{member_id}
+		and member_pw = #{member_pw}
+	</select>
+
+	<select id="findUser" parameterType="MemberDTO" resultType="MemberDTO">
+		select member_id, member_phone
+		from member
+		where member_id = #{member_id}
+		and member_phone = #{member_phone}
+	</select>
+	
+	<update id="changePw" parameterType="MemberDTO">
+		update member set member_pw = #{member_pw} where member_id = #{member_id}
+	</update>
+	
+	<update id="userEdit" parameterType="MemberDTO">
+		update member set member_pw = #{member_pw}, member_name = #{member_name}, member_phone = #{member_phone}
+		where member_id = #{member_id}
+	</update>
+	
+	<delete id="deleteUser" parameterType="MemberDTO">
+		delete from member where member_id = #{member_id}
+	</delete>
+	
+	<!-- 아이디 번호로 아이디 조회 -->
+    <select id="selectByMemberIdx" parameterType="int" resultType="MemberDTO">
+        select member_id
+        from member
+        where member_idx = #{member_idx}
+    </select>
+
+</mapper>

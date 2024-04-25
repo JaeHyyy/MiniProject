@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- jdbc.properties 등록 -->
+	<properties resource="com/config/jdbc.properties"></properties>
+
+	<!-- DTO 별칭-->
+	<typeAliases>
+		<typeAlias type="com.dto.BookDTO" alias="BookDTO" />
+		<typeAlias type="com.dto.ManagerDTO" alias="ManagerDTO" />
+		<typeAlias type="com.dto.MemberDTO" alias="MemberDTO" />
+		<typeAlias type="com.dto.RentalDTO" alias="RentalDTO" />
+
+	</typeAliases>
+
+
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<!-- jdbc.properties 등록된 값을 참조: ${key} -->
+				<property name="driver" value="${jdbc.driver}" />
+				<property name="url" value="${jdbc.url}" />
+				<property name="username" value="${jdbc.userid}" />
+				<property name="password" value="${jdbc.passwd}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="com/config/BookMapper.xml" />
+		<mapper resource="com/config/ManagerMapper.xml" />
+		<mapper resource="com/config/MemberMapper.xml" />
+		<mapper resource="com/config/RentalMapper.xml" />
+	</mappers>
+</configuration>

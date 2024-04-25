@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.config.BookMapper">
+
+	<!-- 도서 추가 -->
+	<insert id="createBook" parameterType="BookDTO">
+	insert into book(book_idx,book_name,book_author,book_pub,book_year,book_genre,book_ISBN,book_price,book_rent)
+	values(#{book_idx}, #{book_name},#{book_author},#{book_pub},now(),#{book_genre},#{book_ISBN},#{book_price},#{book_rent})
+	</insert>
+
+	<!-- 도서 정보 수정 -->
+	<update id="updateBook" parameterType="BookDTO">
+		update book
+		set book_name = #{book_name}, book_author = #{book_author}, book_pub = #{book_pub}, book_year = #{book_year}, book_genre = #{book_genre}, book_ISBN = #{book_ISBN}, book_price = #{book_price}, book_rent = #{book_rent}
+		where book_idx = #{book_idx}
+	</update>
+
+	<!-- 도서 삭제 -->
+   <delete id="deleteByBookIdx" parameterType="int">
+   delete from book
+   where book_idx = #{book_idx} and book_rent = 'Y'
+   </delete>
+
+	<!-- 전체 조회 -->
+	<select id="findAllBook" resultType="BookDTO">
+ 		select book_idx, 
+ 			   book_name,
+ 			   book_author,
+ 			   book_pub,
+ 			   book_year,
+ 			   book_genre,
+ 			   book_ISBN,
+ 			   book_price,
+ 			   book_rent
+ 		from book
+ 	</select>
+
+	<!-- 책 번호로 책이름 조회 -->
+	<select id="selectByBookIdx" parameterType="int" resultType="BookDTO">
+        select book_name
+        from book
+        where book_idx = #{book_idx}
+    </select>
+
+	<!-- 책 번호로 대여상태 조회 -->
+	<select id="selectBookRentByBookIdx" parameterType="int" resultType="BookDTO">
+        select book_rent
+        from book
+        where book_idx = #{book_idx}
+    </select>
+
+	<!-- 책 대여 상태 변경 -->
+	<update id="updateBookRent" parameterType="BookDTO">
+    update book
+    set book_rent = #{book_rent}
+    where book_idx = #{book_idx}
+	</update>
+
+
+</mapper>

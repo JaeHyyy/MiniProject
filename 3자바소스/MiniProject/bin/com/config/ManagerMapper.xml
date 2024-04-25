@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.config.ManagerMapper">
+
+	<!-- 회원 전체 조회 -->
+	<select id="findAllMember" resultType="ManagerDTO">
+ 		select member_idx, 
+ 			   member_id,
+ 			   member_name,
+ 			   member_pw,
+ 			   member_phone,
+ 			   member_date,
+ 			   member_role
+ 		from member
+ 	</select>
+
+	<!-- 회원 등급 수정 -->
+	<update id="updateMemberRole" parameterType="ManagerDTO">
+ 	update member
+ 	set member_role = #{member_role}
+ 	where member_idx = #{member_idx}
+ 	</update>
+
+	<!-- 회원 탈퇴 -->
+   <delete id="deleteByMemberIdx" parameterType="int">
+      delete from member
+      where member_idx = #{member_idx}
+      and not exists (select 1 from rental where member_idx = #{member_idx})
+    </delete>
+
+</mapper>
